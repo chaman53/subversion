@@ -29,7 +29,19 @@ sudo htpasswd -bm /etc/apache2/dav_svn.passwd user1 user1
 Step 5 – Configure Apache with Subversion
 Subversion Apache module package creates an configuration file /etc/apache2/mods-enabled/dav_svn.conf. You just need to make necessary changes to it.
 sudo vi /etc/apache2/mods-enabled/dav_svn.conf
- 
+ Alias /svn /var/lib/svn
+<Location /svn>
+
+   DAV svn
+   SVNParentPath /var/lib/svn
+
+   AuthType Basic
+   AuthName "Subversion Repository"
+   AuthUserFile /etc/apache2/dav_svn.passwd
+   Require valid-user
+     
+</Location>
+
 Step 6 – Access Repository in Browser
 
 http://3.84.116.149/svn/myrepo/
